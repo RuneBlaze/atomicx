@@ -1,0 +1,12 @@
+[package]
+name = "feo3mics"
+version = "0.0.9"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "feo3mics"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.17.3", features = ["extension-module", "abi3", "abi3-py37"] }
