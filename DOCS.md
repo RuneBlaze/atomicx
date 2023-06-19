@@ -37,12 +37,12 @@ The `AtomicInt` class provides the following atomic operations:
 
 - `load()`: Atomically loads the value of the atomic integer.
 - `store(value)`: Atomically stores the given value into the atomic integer, returning the previous value.
-- `add(value)`: Atomically adds the given value to the atomic integer.
-- `sub(value)`: Atomically subtracts the given value from the atomic integer.
+- `add(value)`: Atomically adds the given value to the atomic integer, returning the previous value.
+- `sub(value)`: Atomically subtracts the given value from the atomic integer, returning the previous value.
 - `swap(value)`: Atomically swaps the value of the atomic integer with the given value.
 - `compare_exchange(current, new)`: Atomically compares the value of the atomic integer with the given current value, and if they are equal, swaps it with the new value. Returns a boolean indicating whether the swap was successful and the previous value of the atomic integer.
-- `fetch_mul(value)`: Atomically multiplies the atomic integer by the given value and returns the previous value.
-- `fetch_div(value)`: Atomically divides the atomic integer by the given value and returns the previous value.
+- `mul(value)`: Atomically multiplies the atomic integer by the given value and returns the previous value.
+- `div(value)`: Atomically divides the atomic integer by the given value and returns the previous value.
 
 Here's an example of using some of these operations:
 

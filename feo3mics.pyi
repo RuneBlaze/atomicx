@@ -85,7 +85,7 @@ class AtomicInt:
         """
         ...
 
-    def fetch_mul(self, value: int) -> int:
+    def mul(self, value: int) -> int:
         """
         Atomically multiplies the atomic integer by the given value and returns the previous value.
 
@@ -97,7 +97,7 @@ class AtomicInt:
         """
         ...
 
-    def fetch_div(self, value: int) -> int:
+    def div(self, value: int) -> int:
         """
         Atomically divides the atomic integer by the given value and returns the result.
 

@@ -47,13 +47,13 @@ impl AtomicInt {
         )
     }
 
-    pub fn fetch_mul(&self, value: i64) -> i64 {
+    pub fn mul(&self, value: i64) -> i64 {
         self.value
             .fetch_update(SeqCst, SeqCst, |v| Some(v * value))
             .unwrap()
     }
 
-    pub fn fetch_div(&self, value: i64) -> PyResult<i64> {
+    pub fn div(&self, value: i64) -> PyResult<i64> {
         let r = self
             .value
             .fetch_update(SeqCst, SeqCst, |v| v.checked_div(value));
