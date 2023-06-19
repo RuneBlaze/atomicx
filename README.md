@@ -35,8 +35,8 @@ print(f"Value: {value}")
 previous_value = atom.swap(20)
 print(f"Previous Value: {previous_value}")
 
-result = atom.add(5)
-print(f"Result: {result}")
+atom.add(5)
+print(f"Result after addition: {atom}")
 
 # Increment and decrement operations
 atom.inc()
