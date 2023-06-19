@@ -17,7 +17,7 @@ pip install feo3mics
 
 ## Usage
 
-See the [documentation](https://github.com/RuneBlaze/feo3mics/blob/main/DOCS.md) for more information. Here's a quick overview:
+See the [documentation](DOCS.md) for more information. Here's a quick overview:
 
 ### Atomic Integer
 
