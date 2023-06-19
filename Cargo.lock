@@ -22,7 +22,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "feo3mics"
-version = "0.0.11"
+version = "0.0.12"
 dependencies = [
  "pyo3",
 ]

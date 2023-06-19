@@ -4,12 +4,22 @@ build-backend = "maturin"
 
 [project]
 name = "feo3mics"
+description = "easy-to-use atomic integer and boolean operations for thread-safe programming"
 requires-python = ">=3.7"
 readme = "README.md"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Typing :: Typed",
+]
+authors = [
+    {name = "RuneBlaze", email = "liubaqiao@gmail.com"},
 ]
 
-
+[project.urls]
+"Homepage" = "https://github.com/RuneBlaze/feo3mics"
+"Bug Tracker" = "https://github.com/RuneBlaze/feo3mics/issues"
+"Documentation" = "https://github.com/RuneBlaze/feo3mics/blob/main/DOCS.md"
