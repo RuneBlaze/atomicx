@@ -1,13 +1,13 @@
-# feo3mics Documentation
+# atomicx Documentation
 
-feo3mics is an easy-to-use atomics library for Python, providing atomic integer and boolean operations. This documentation provides an overview of the package and its usage.
+atomicx is an easy-to-use atomics library for Python, providing atomic integer and boolean operations. This documentation provides an overview of the package and its usage.
 
 ## Installation
 
-To install feo3mics, use pip:
+To install atomicx, use pip:
 
 ```bash
-pip install feo3mics
+pip install atomicx
 ```
 
 ## Atomic Integer
@@ -20,7 +20,7 @@ for simplicity.
 To create an instance of `AtomicInt`, use the `AtomicInt()` constructor:
 
 ```python
-from feo3mics import AtomicInt
+from atomicx import AtomicInt
 
 atom = AtomicInt() # Creates an atomic integer with an initial value of 0
 ```
@@ -89,7 +89,7 @@ The `AtomicBool` class provides atomic operations for booleans.
 To create an instance of `AtomicBool`, use the `AtomicBool()` constructor:
 
 ```python
-from feo3mics import AtomicBool
+from atomicx import AtomicBool
 
 atom = AtomicBool()
 ```

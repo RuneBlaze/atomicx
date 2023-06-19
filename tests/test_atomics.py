@@ -1,5 +1,5 @@
 import threading
-from feo3mics import AtomicInt, AtomicBool
+from atomicx import AtomicInt, AtomicBool
 
 
 def test_atomic_int_increment():

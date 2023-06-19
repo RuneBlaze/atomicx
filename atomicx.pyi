@@ -1,12 +1,12 @@
 """
-feo3mics is an easy-to-use atomics library for Python, providing atomic integer and boolean operations for thread-safe programming.
+atomicx is an easy-to-use atomics library for Python, providing atomic integer and boolean operations for thread-safe programming.
 
 The package includes two main classes: `AtomicInt` and `AtomicBool`, which allow you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming.
 
 - `AtomicInt` provides atomic operations such as load, store, add, subtract, swap, compare and exchange, multiply, divide, increment, and decrement for integer variables.
 - `AtomicBool` provides atomic operations such as load, store, swap, compare and exchange, and flip for boolean variables.
 
-The atomic operations provided by feo3mics are implemented using synchronization primitives from the `std::sync::atomic` module in Rust, making them efficient and reliable.
+The atomic operations provided by atomicx are implemented using synchronization primitives from the `std::sync::atomic` module in Rust, making them efficient and reliable.
 """
 
 from typing import Any, Callable, Generic, Optional, Tuple, TypeVar

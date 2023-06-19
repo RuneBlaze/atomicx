@@ -1,8 +1,8 @@
-# feo3mics
+# atomicx
 
-[![PyPI version](https://badge.fury.io/py/feo3mics.svg)](https://badge.fury.io/py/feo3mics)
+[![PyPI version](https://badge.fury.io/py/atomicx.svg)](https://badge.fury.io/py/atomicx)
 
-feo3mics is an easy-to-use atomics library for Python, providing atomic integer and boolean operations. It allows you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming. Everything is entirely lock-free and is backed by Rust's atomic types.
+atomicx is an easy-to-use atomics library for Python, providing atomic integer and boolean operations. It allows you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming. Everything is entirely lock-free and is backed by Rust's atomic types.
 
 ## Features
 
@@ -11,8 +11,10 @@ feo3mics is an easy-to-use atomics library for Python, providing atomic integer 
 
 ## Installation
 
+Binary wheels are provided for Python 3.7 and above on Linux, macOS, and Windows:
+
 ```bash
-pip install feo3mics
+pip install atomicx
 ```
 
 ## Usage
@@ -22,7 +24,7 @@ See the [documentation](DOCS.md) for more information. Here's a quick overview:
 ### Atomic Integer
 
 ```python
-from feo3mics import AtomicInt
+from atomicx import AtomicInt
 
 # Create an atomic integer with an initial value of 0
 atom = AtomicInt()
@@ -46,7 +48,7 @@ atom.dec()
 ### Atomic Boolean
 
 ```python
-from feo3mics import AtomicBool
+from atomicx import AtomicBool
 
 # Create an atomic boolean with an initial value of False
 atom = AtomicBool()
@@ -72,4 +74,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Acknowledgments
 
-- The `feo3mics` library is heavily dependent on and inspired by the Rust `std::sync::atomic` module.
+- The `atomicx` library is heavily dependent on and inspired by the Rust `std::sync::atomic` module.
