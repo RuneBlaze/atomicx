@@ -8,6 +8,7 @@ atomicx is an easy-to-use atomics library for Python, providing atomic integer a
 
 - Atomic integer operations: load, store, add, subtract, swap, compare and exchange, multiply, divide, increment, decrement.
 - Atomic boolean operations: load, store, swap, compare and exchange, flip.
+- Strong typing provided as stubs for static type checkers.
 
 ## Installation
 
