@@ -68,6 +68,33 @@ print(f"Swap Result: {result}")
 atom.flip()
 ```
 
+### Thread Safety
+
+Atomic variables are thread-safe and can be shared between threads. Each predefined operation on them are executed per thread as an indivisible unit. Here's an example of using an atomic integer in a multithreaded environment:
+
+```python
+import threading
+from atomicx import AtomicInt
+
+x = AtomicInt(0)
+def increment():
+    for _ in range(1000):
+        x.inc() # equivalent to x.add(1) or x += 1
+
+threads = []
+for _ in range(10):
+    thread = threading.Thread(target=increment)
+    thread.start()
+    threads.append(thread)
+
+for thread in threads:
+    thread.join()
+
+assert x.load() == 1000 * 10
+```
+
+The equivalent in vanilla Python without locks is not thread-safe in general.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
