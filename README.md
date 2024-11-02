@@ -2,12 +2,13 @@
 
 [![PyPI version](https://badge.fury.io/py/atomicx.svg)](https://badge.fury.io/py/atomicx)
 
-atomicx is an easy-to-use atomics library for Python, providing atomic integer and boolean operations. It allows you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming. Everything is entirely lock-free and is backed by Rust's atomic types.
+atomicx is an easy-to-use atomics library for Python, providing atomic integer, boolean, and floats. It allows you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming. Everything is entirely lock-free and is backed by Rust's atomic types.
 
 ## Features
 
 - Atomic integer operations: load, store, add, subtract, swap, compare and exchange, multiply, divide, increment, decrement.
 - Atomic boolean operations: load, store, swap, compare and exchange, flip.
+- Atomic floats: load, store, swap, compare and exchange.
 - Strong typing provided as stubs for static type checkers.
 
 ## Installation
@@ -69,6 +70,23 @@ print(f"Swap Result: {result}")
 atom.flip()
 ```
 
+### Atomic Float
+
+```python
+from atomicx import AtomicFloat
+
+# Create an atomic float with an initial value of 0.0
+atom = AtomicFloat()
+print(f"Initial Value: {atom.load()}")
+
+# Perform atomic operations
+atom.store(3.14)
+value = atom.load()
+print(f"Value: {value}")
+
+# See docs for more operations
+```
+
 ### Thread Safety
 
 Atomic variables are thread-safe and can be shared between threads. Each predefined operation on them are executed per thread as an indivisible unit. Here's an example of using an atomic integer in a multithreaded environment:
@@ -103,3 +121,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Acknowledgments
 
 - The `atomicx` library is heavily dependent on and inspired by the Rust `std::sync::atomic` module.
+- The floating point atomic operations are delegated to the `portable-atomic` crate.
