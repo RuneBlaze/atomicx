@@ -5,17 +5,21 @@ The package includes two main classes: `AtomicInt` and `AtomicBool`, which allow
 
 - `AtomicInt` provides atomic operations such as load, store, add, subtract, swap, compare and exchange, multiply, divide, increment, and decrement for integer variables.
 - `AtomicBool` provides atomic operations such as load, store, swap, compare and exchange, and flip for boolean variables.
+- `AtomicFloat` provides atomic operations for floating-point numbers.
 
-The atomic operations provided by atomicx are implemented using synchronization primitives from the `std::sync::atomic` module in Rust, making them efficient and reliable.
+Integer and boolean atomics are backed by `std::sync::atomic`, while floating-point atomics are delegated to the `portable-atomic` crate.
+Note that many operations for floating point atomics are underlyingly implemented
+using CAS (compare-and-swap) loops.
 """
 
 from typing import Any, Callable, Generic, Optional, Tuple, TypeVar
+
 class AtomicInt:
     """
     Represents an atomic signed integer of 64 bits. Unsigned or other widths are not supported for simplicity.
     """
 
-    def __init__(self, value: int = 0) -> 'AtomicInt':
+    def __init__(self, value: int = 0) -> "AtomicInt":
         """
         Creates a new instance of AtomicInt.
 
@@ -141,12 +145,15 @@ class AtomicInt:
         """
         ...
 
+    def __getstate__(self) -> float: ...
+    def __setstate__(self, value: float) -> None: ...
+
 class AtomicBool:
     """
     Represents an atomic boolean.
     """
 
-    def __init__(self, value: bool = False) -> 'AtomicBool':
+    def __init__(self, value: bool = False) -> "AtomicBool":
         """
         Creates a new instance of AtomicBool.
 
@@ -211,3 +218,115 @@ class AtomicBool:
             The previous value of the atomic boolean.
         """
         ...
+
+    def __getstate__(self) -> float: ...
+    def __setstate__(self, value: float) -> None: ...
+
+class AtomicFloat:
+    """An atomic floating-point number that can be safely shared between threads.
+
+    Note: This class is implemented using the `portable-atomic` crate, and under the hood, many operations are implemented using CAS (compare-and-swap) loops.
+
+    Args:
+        value: Initial floating-point value. Defaults to 0.0.
+    """
+
+    def __init__(self, value: float = 0.0) -> None: ...
+    def load(self) -> float:
+        """Atomically loads the current value.
+
+        Returns:
+            float: The current value.
+        """
+        ...
+
+    def store(self, value: float) -> None:
+        """Atomically stores a new value.
+
+        Args:
+            value: The value to store.
+        """
+        ...
+
+    def add(self, value: float) -> float:
+        """Atomically adds a value and returns the previous value.
+
+        Args:
+            value: The value to add.
+
+        Returns:
+            float: The value before the addition.
+        """
+        ...
+
+    def sub(self, value: float) -> float:
+        """Atomically subtracts a value and returns the previous value.
+
+        Args:
+            value: The value to subtract.
+
+        Returns:
+            float: The value before the subtraction.
+        """
+        ...
+
+    def swap(self, value: float) -> float:
+        """Atomically replaces the current value and returns the previous value.
+
+        Args:
+            value: The new value to store.
+
+        Returns:
+            float: The previous value.
+        """
+        ...
+
+    def compare_exchange(self, current: float, new: float) -> Tuple[bool, float]:
+        """Atomically compares and exchanges values.
+
+        Compares the current value with the expected value and, if equal,
+        replaces it with the new value.
+
+        Args:
+            current: The expected current value.
+            new: The new value to store if current matches.
+
+        Returns:
+            Tuple[bool, float]: A tuple containing:
+                - bool: True if the exchange was successful
+                - float: The actual current value (either before or after exchange)
+        """
+        ...
+
+    def mul(self, value: float) -> float:
+        """Atomically multiplies by a value and returns the previous value.
+
+        Args:
+            value: The value to multiply by.
+
+        Returns:
+            float: The value before multiplication.
+        """
+        ...
+
+    def div(self, value: float) -> float:
+        """Atomically divides by a value and returns the previous value.
+
+        Args:
+            value: The value to divide by.
+
+        Raises:
+            ZeroDivisionError: If value is 0.
+
+        Returns:
+            float: The value before division.
+        """
+        ...
+
+    def __iadd__(self, value: float) -> None: ...
+    def __isub__(self, value: float) -> None: ...
+    def __repr__(self) -> str: ...
+    def __str__(self) -> str: ...
+    def __float__(self) -> float: ...
+    def __getstate__(self) -> float: ...
+    def __setstate__(self, value: float) -> None: ...

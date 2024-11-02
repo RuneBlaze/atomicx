@@ -1,6 +1,6 @@
 # atomicx Documentation
 
-atomicx is an easy-to-use atomics library for Python, providing atomic integer and boolean operations. This documentation provides an overview of the package and its usage.
+atomicx is an easy-to-use atomics library for Python, providing atomic integer, boolean, and float operations. This documentation provides an overview of the package and its usage.
 
 ## Installation
 
@@ -118,3 +118,87 @@ value = atom.load()
 atom.store(True)
 atom.swap(False)
 ```
+
+## Atomic Float
+
+The `AtomicFloat` class provides atomic operations for 64-bit floating point numbers.
+
+### Creation
+
+To create an instance of `AtomicFloat`, use the `AtomicFloat()` constructor:
+
+```python
+from atomicx import AtomicFloat
+
+atom = AtomicFloat()  # Creates with default value 0.0
+```
+
+You can also provide an initial value for the atomic float:
+
+```python
+atom = AtomicFloat(3.14)
+```
+
+### Atomic Operations
+
+The `AtomicFloat` class provides the following atomic operations:
+
+- `load()`: Atomically loads the value of the atomic float.
+- `store(value)`: Atomically stores the given value into the atomic float.
+- `add(value)`: Atomically adds the given value to the atomic float, returning the previous value.
+- `sub(value)`: Atomically subtracts the given value from the atomic float, returning the previous value.
+- `mul(value)`: Atomically multiplies the atomic float by the given value, returning the previous value.
+- `div(value)`: Atomically divides the atomic float by the given value, returning the previous value. Raises `ZeroDivisionError` if the value is 0.
+- `swap(value)`: Atomically swaps the value of the atomic float with the given value, returning the previous value.
+- `compare_exchange(current, new)`: Atomically compares the value of the atomic float with the given current value, and if they are equal, swaps it with the new value. Returns a tuple of (success, previous_value) where success is a boolean indicating whether the swap was successful.
+
+Here's an example of using some of these operations:
+
+```python
+atom = AtomicFloat(1.0)
+value = atom.load()  # Gets current value
+atom.store(2.5)     # Sets new value
+prev = atom.add(1.5)  # Adds 1.5, returns previous value
+prev = atom.mul(2.0)  # Multiplies by 2, returns previous value
+```
+
+### Arithmetic Operations
+
+The `AtomicFloat` class supports in-place arithmetic operations:
+
+```python
+atom = AtomicFloat(1.0)
+atom += 2.0  # Atomic addition
+atom -= 1.0  # Atomic subtraction
+```
+
+### Thread Safety
+
+All operations on `AtomicFloat` are atomic and thread-safe, making it suitable for use in concurrent applications:
+
+```python
+from threading import Thread
+
+atom = AtomicFloat(0.0)
+
+def worker():
+    for _ in range(1000):
+        atom.add(1.0)
+
+threads = [Thread(target=worker) for _ in range(10)]
+for t in threads:
+    t.start()
+for t in threads:
+    t.join()
+
+print(atom.load())  # Will reliably print 10000.0
+```
+
+### Special Methods
+
+The class implements several special methods for convenience:
+
+- `__repr__()`: Returns a string representation in the format `"AtomicFloat(value)"`
+- `__str__()`: Returns the string representation of the current value
+- `__float__()`: Allows conversion to a regular float value
+- Support for pickling and unpickling
