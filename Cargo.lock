@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "atomicx"
-version = "0.0.13"
+version = "0.0.14"
 dependencies = [
  "num",
  "portable-atomic",

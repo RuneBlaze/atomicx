@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "atomicx"
-description = "easy-to-use lock-free atomic integers and booleans for multithreading"
+description = "easy-to-use lock-free atomic integers, booleans, and floats for Python"
 requires-python = ">=3.7"
 readme = "README.md"
 classifiers = [
