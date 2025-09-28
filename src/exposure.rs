@@ -1,5 +1,6 @@
 use portable_atomic::AtomicF64;
 use pyo3::prelude::*;
+use pyo3::types::PyAny;
 use std::sync::atomic::{AtomicI64, Ordering::SeqCst};
 
 #[pyclass(module = "atomicx")]
@@ -85,6 +86,17 @@ impl AtomicInt {
 
     pub fn fetch_xor(&self, value: i64) -> i64 {
         self.value.fetch_xor(value, SeqCst)
+    }
+
+    pub fn update(&self, func: Bound<'_, PyAny>) -> PyResult<i64> {
+        let mut prev = self.value.load(SeqCst);
+        loop {
+            let next: i64 = func.call1((prev,))?.extract()?;
+            match self.value.compare_exchange(prev, next, SeqCst, SeqCst) {
+                Ok(_) => return Ok(next),
+                Err(current) => prev = current,
+            }
+        }
     }
 
     pub fn __iadd__(&mut self, value: i64) -> PyResult<()> {
@@ -202,6 +214,17 @@ impl AtomicBool {
 
     pub fn fetch_xor(&self, value: bool) -> bool {
         self.value.fetch_xor(value, SeqCst)
+    }
+
+    pub fn update(&self, func: Bound<'_, PyAny>) -> PyResult<bool> {
+        let mut prev = self.value.load(SeqCst);
+        loop {
+            let next: bool = func.call1((prev,))?.extract()?;
+            match self.value.compare_exchange(prev, next, SeqCst, SeqCst) {
+                Ok(_) => return Ok(next),
+                Err(current) => prev = current,
+            }
+        }
     }
 
     pub fn __str__(&self) -> PyResult<String> {
@@ -324,6 +347,17 @@ impl AtomicFloat {
             }
             match self.value.compare_exchange(prev, value, SeqCst, SeqCst) {
                 Ok(old) => return old,
+                Err(current) => prev = current,
+            }
+        }
+    }
+
+    pub fn update(&self, func: Bound<'_, PyAny>) -> PyResult<f64> {
+        let mut prev = self.value.load(SeqCst);
+        loop {
+            let next: f64 = func.call1((prev,))?.extract()?;
+            match self.value.compare_exchange(prev, next, SeqCst, SeqCst) {
+                Ok(_) => return Ok(next),
                 Err(current) => prev = current,
             }
         }

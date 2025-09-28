@@ -110,6 +110,20 @@ def test_atomic_int_fetch_extrema_and_bitwise():
     assert atom.load() == 0b1100
 
 
+def test_atomic_int_update():
+    atom = AtomicInt(2)
+
+    new_value = atom.update(lambda current: current + 5)
+    assert new_value == 7
+    assert atom.load() == 7
+
+    def saturate(current: int) -> int:
+        return 10 if current < 10 else current
+
+    assert atom.update(saturate) == 10
+    assert atom.load() == 10
+
+
 def test_atomic_bool_compare_exchange_successful():
     atom = AtomicBool(True)
 
@@ -150,6 +164,20 @@ def test_atomic_bool_fetch_bitwise():
     prev = atom.fetch_xor(True)
     assert prev is True
     assert atom.load() is False
+
+
+def test_atomic_bool_update():
+    atom = AtomicBool(False)
+
+    result = atom.update(lambda current: not current)
+    assert result is True
+    assert atom.load() is True
+
+    def preserve(current: bool) -> bool:
+        return current
+
+    assert atom.update(preserve) is True
+    assert atom.load() is True
 
 
 def test_atomic_float_default_constructor():
@@ -239,6 +267,20 @@ def test_atomic_float_fetch_extrema():
     prev = atom.fetch_min(3.0)
     assert prev == 5.0
     assert atom.load() == 3.0
+
+
+def test_atomic_float_update():
+    atom = AtomicFloat(1.5)
+
+    updated = atom.update(lambda current: current * 2.0)
+    assert updated == 3.0
+    assert atom.load() == 3.0
+
+    def clamp(current: float) -> float:
+        return 4.0 if current < 4.0 else current
+
+    assert atom.update(clamp) == 4.0
+    assert atom.load() == 4.0
 
 
 def test_atomic_float_iadd():

@@ -42,6 +42,9 @@ print(f"Previous Value: {previous_value}")
 atom.add(5)
 print(f"Result after addition: {atom}")
 
+# Run a retry loop to clamp the value to at least 0
+atom.update(lambda current: max(current, 0))
+
 # Increment and decrement operations
 atom.inc()
 atom.dec()
@@ -68,6 +71,9 @@ print(f"Swap Result: {result}")
 
 # Flip the value of the atomic boolean
 atom.flip()
+
+# Update using a callable
+atom.update(lambda current: not current)
 ```
 
 ### Atomic Float

@@ -43,6 +43,9 @@ The `AtomicInt` class provides the following atomic operations:
 - `compare_exchange(current, new)`: Atomically compares the value of the atomic integer with the given current value, and if they are equal, swaps it with the new value. Returns a boolean indicating whether the swap was successful and the previous value of the atomic integer.
 - `mul(value)`: Atomically multiplies the atomic integer by the given value and returns the previous value.
 - `div(value)`: Atomically divides the atomic integer by the given value and returns the previous value.
+- `fetch_max(value)` / `fetch_min(value)`: Replace the stored value with the extrema while returning the previous value.
+- `fetch_and(value)`, `fetch_or(value)`, `fetch_xor(value)`: Bitwise fetch-modify operations returning the previous value.
+- `update(func)`: Retry loop that loads the current value, calls `func(current)`, and stores the result. Returns the newly stored value.
 
 Here's an example of using some of these operations:
 
@@ -109,6 +112,8 @@ The `AtomicBool` class provides the following atomic operations:
 - `swap(value)`: Atomically swaps the value of the atomic boolean with the given value, returning the previous value.
 - `compare_exchange(current, new)`: Atomically compares the value of the atomic boolean with the given current value, and if they are equal, swaps it with the new value. Returns a boolean indicating whether the swap was successful and the previous value of the atomic boolean.
 - `flip()`: Atomically flips the value of the atomic boolean, returning the previous value.
+- `fetch_and(value)`, `fetch_or(value)`, `fetch_xor(value)`: Boolean fetch-modify helpers.
+- `update(func)`: Applies `func` to the current value inside a retry loop and stores the result, returning the new value.
 
 Here's an example of using some of these operations:
 
@@ -151,6 +156,8 @@ The `AtomicFloat` class provides the following atomic operations:
 - `div(value)`: Atomically divides the atomic float by the given value, returning the previous value. Raises `ZeroDivisionError` if the value is 0.
 - `swap(value)`: Atomically swaps the value of the atomic float with the given value, returning the previous value.
 - `compare_exchange(current, new)`: Atomically compares the value of the atomic float with the given current value, and if they are equal, swaps it with the new value. Returns a tuple of (success, previous_value) where success is a boolean indicating whether the swap was successful.
+- `fetch_max(value)` / `fetch_min(value)`: CAS-based extrema helpers (return the previous value).
+- `update(func)`: Retry loop that stores the value returned from `func(current)` and returns the new value.
 
 Here's an example of using some of these operations:
 

@@ -147,6 +147,10 @@ class AtomicInt:
         """Atomically bitwise-XORs the value and returns the previous value."""
         ...
 
+    def update(self, func: Callable[[int], int]) -> int:
+        """Applies `func` in a retry loop and stores the returned value atomically, returning the new value."""
+        ...
+
     def inc(self) -> int:
         """
         Atomically increments the atomic integer by 1.
@@ -249,6 +253,10 @@ class AtomicBool:
 
     def fetch_xor(self, value: bool) -> bool:
         """Atomically XORs the boolean with the provided value and returns the previous value."""
+        ...
+
+    def update(self, func: Callable[[bool], bool]) -> bool:
+        """Applies `func` in a retry loop and stores the returned value atomically, returning the new value."""
         ...
 
     def __getstate__(self) -> float: ...
@@ -361,6 +369,10 @@ class AtomicFloat:
 
     def fetch_min(self, value: float) -> float:
         """Atomically replaces the value with the minimum of the current and provided values."""
+        ...
+
+    def update(self, func: Callable[[float], float]) -> float:
+        """Applies `func` in a retry loop and stores the returned value atomically, returning the new value."""
         ...
 
     def __iadd__(self, value: float) -> None: ...
