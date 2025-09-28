@@ -124,6 +124,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13t"
+      - name: Install Rust targets
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
       - name: Install tooling
         run: |
           python -X gil=0 -m pip install -U pip maturin
@@ -136,6 +138,27 @@ jobs:
           name: wheels-macos-free-threaded
           path: dist
 
+  windows-free-threaded:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13t"
+      - name: Install tooling
+        shell: pwsh
+        run: |
+          python -X gil=0 -m pip install -U pip maturin
+      - name: Build free-threaded wheels
+        shell: pwsh
+        run: |
+          python -X gil=0 -m maturin build --release --no-default-features -o dist --find-interpreter
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-windows-free-threaded
+          path: dist
+
   release:
     name: Release
     runs-on: ubuntu-latest
@@ -145,6 +168,7 @@ jobs:
       - windows-gil
       - linux-free-threaded
       - macos-free-threaded
+      - windows-free-threaded
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
     steps:
       - uses: actions/download-artifact@v4
