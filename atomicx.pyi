@@ -127,6 +127,26 @@ class AtomicInt:
         """
         ...
 
+    def fetch_max(self, value: int) -> int:
+        """Atomically replaces the value with the maximum of the current and provided values."""
+        ...
+
+    def fetch_min(self, value: int) -> int:
+        """Atomically replaces the value with the minimum of the current and provided values."""
+        ...
+
+    def fetch_and(self, value: int) -> int:
+        """Atomically bitwise-ANDs the value and returns the previous value."""
+        ...
+
+    def fetch_or(self, value: int) -> int:
+        """Atomically bitwise-ORs the value and returns the previous value."""
+        ...
+
+    def fetch_xor(self, value: int) -> int:
+        """Atomically bitwise-XORs the value and returns the previous value."""
+        ...
+
     def inc(self) -> int:
         """
         Atomically increments the atomic integer by 1.
@@ -217,6 +237,18 @@ class AtomicBool:
         Returns:
             The previous value of the atomic boolean.
         """
+        ...
+
+    def fetch_and(self, value: bool) -> bool:
+        """Atomically ANDs the boolean with the provided value and returns the previous value."""
+        ...
+
+    def fetch_or(self, value: bool) -> bool:
+        """Atomically ORs the boolean with the provided value and returns the previous value."""
+        ...
+
+    def fetch_xor(self, value: bool) -> bool:
+        """Atomically XORs the boolean with the provided value and returns the previous value."""
         ...
 
     def __getstate__(self) -> float: ...
@@ -321,6 +353,14 @@ class AtomicFloat:
         Returns:
             float: The value before division.
         """
+        ...
+
+    def fetch_max(self, value: float) -> float:
+        """Atomically replaces the value with the maximum of the current and provided values."""
+        ...
+
+    def fetch_min(self, value: float) -> float:
+        """Atomically replaces the value with the minimum of the current and provided values."""
         ...
 
     def __iadd__(self, value: float) -> None: ...

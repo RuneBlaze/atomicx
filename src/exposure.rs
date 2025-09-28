@@ -67,6 +67,26 @@ impl AtomicInt {
         }
     }
 
+    pub fn fetch_max(&self, value: i64) -> i64 {
+        self.value.fetch_max(value, SeqCst)
+    }
+
+    pub fn fetch_min(&self, value: i64) -> i64 {
+        self.value.fetch_min(value, SeqCst)
+    }
+
+    pub fn fetch_and(&self, value: i64) -> i64 {
+        self.value.fetch_and(value, SeqCst)
+    }
+
+    pub fn fetch_or(&self, value: i64) -> i64 {
+        self.value.fetch_or(value, SeqCst)
+    }
+
+    pub fn fetch_xor(&self, value: i64) -> i64 {
+        self.value.fetch_xor(value, SeqCst)
+    }
+
     pub fn __iadd__(&mut self, value: i64) -> PyResult<()> {
         self.value.fetch_add(value, SeqCst);
         Ok(())
@@ -172,6 +192,18 @@ impl AtomicBool {
         self.value.fetch_xor(true, SeqCst)
     }
 
+    pub fn fetch_and(&self, value: bool) -> bool {
+        self.value.fetch_and(value, SeqCst)
+    }
+
+    pub fn fetch_or(&self, value: bool) -> bool {
+        self.value.fetch_or(value, SeqCst)
+    }
+
+    pub fn fetch_xor(&self, value: bool) -> bool {
+        self.value.fetch_xor(value, SeqCst)
+    }
+
     pub fn __str__(&self) -> PyResult<String> {
         Ok(self.value.load(SeqCst).to_string())
     }
@@ -268,6 +300,32 @@ impl AtomicFloat {
             Err(_) => Err(PyErr::new::<pyo3::exceptions::PyZeroDivisionError, _>(
                 "division by zero",
             )),
+        }
+    }
+
+    pub fn fetch_max(&self, value: f64) -> f64 {
+        let mut prev = self.value.load(SeqCst);
+        loop {
+            if prev >= value {
+                return prev;
+            }
+            match self.value.compare_exchange(prev, value, SeqCst, SeqCst) {
+                Ok(old) => return old,
+                Err(current) => prev = current,
+            }
+        }
+    }
+
+    pub fn fetch_min(&self, value: f64) -> f64 {
+        let mut prev = self.value.load(SeqCst);
+        loop {
+            if prev <= value {
+                return prev;
+            }
+            match self.value.compare_exchange(prev, value, SeqCst, SeqCst) {
+                Ok(old) => return old,
+                Err(current) => prev = current,
+            }
         }
     }
 

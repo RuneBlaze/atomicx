@@ -82,6 +82,34 @@ def test_atomic_int_race_condition_with_non_atomic_operations():
     assert atom.load() == expected_value
 
 
+def test_atomic_int_fetch_extrema_and_bitwise():
+    atom = AtomicInt(5)
+
+    prev = atom.fetch_max(3)
+    assert prev == 5
+    assert atom.load() == 5
+
+    prev = atom.fetch_max(12)
+    assert prev == 5
+    assert atom.load() == 12
+
+    prev = atom.fetch_min(7)
+    assert prev == 12
+    assert atom.load() == 7
+
+    prev = atom.fetch_and(0b0111)
+    assert prev == 7
+    assert atom.load() == 0b0111
+
+    prev = atom.fetch_or(0b1000)
+    assert prev == 0b0111
+    assert atom.load() == 0b1111
+
+    prev = atom.fetch_xor(0b0011)
+    assert prev == 0b1111
+    assert atom.load() == 0b1100
+
+
 def test_atomic_bool_compare_exchange_successful():
     atom = AtomicBool(True)
 
@@ -101,6 +129,26 @@ def test_atomic_bool_compare_exchange_unsuccessful():
 
     # The swap should be unsuccessful, and the previous value should be False
     assert result == (False, False)
+    assert atom.load() is False
+
+
+def test_atomic_bool_fetch_bitwise():
+    atom = AtomicBool(True)
+
+    prev = atom.fetch_and(True)
+    assert prev is True
+    assert atom.load() is True
+
+    prev = atom.fetch_and(False)
+    assert prev is True
+    assert atom.load() is False
+
+    prev = atom.fetch_or(True)
+    assert prev is False
+    assert atom.load() is True
+
+    prev = atom.fetch_xor(True)
+    assert prev is True
     assert atom.load() is False
 
 
@@ -175,6 +223,22 @@ def test_atomic_float_div_by_zero():
         atom.div(0.0)
     # Value should remain unchanged after failed division
     assert atom.load() == 6.0
+
+
+def test_atomic_float_fetch_extrema():
+    atom = AtomicFloat(2.5)
+
+    prev = atom.fetch_max(2.0)
+    assert prev == 2.5
+    assert atom.load() == 2.5
+
+    prev = atom.fetch_max(5.0)
+    assert prev == 2.5
+    assert atom.load() == 5.0
+
+    prev = atom.fetch_min(3.0)
+    assert prev == 5.0
+    assert atom.load() == 3.0
 
 
 def test_atomic_float_iadd():
