@@ -11,7 +11,7 @@ pub struct AtomicInt {
 #[pymethods]
 impl AtomicInt {
     #[new]
-    #[args(value = "0")]
+    #[pyo3(signature = (value=0))]
     fn new(value: i64) -> Self {
         Self {
             value: AtomicI64::new(value),
@@ -158,7 +158,7 @@ pub struct AtomicBool {
 #[pymethods]
 impl AtomicBool {
     #[new]
-    #[args(value = "false")]
+    #[pyo3(signature = (value=false))]
     fn new(value: bool) -> Self {
         Self {
             value: std::sync::atomic::AtomicBool::new(value),
@@ -246,7 +246,7 @@ pub struct AtomicFloat {
 #[pymethods]
 impl AtomicFloat {
     #[new]
-    #[args(value = "0.0")]
+    #[pyo3(signature = (value=0.0))]
     fn new(value: f64) -> Self {
         Self {
             value: AtomicF64::new(value),

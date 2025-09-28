@@ -1,11 +1,12 @@
 [build-system]
-requires = ["maturin>=0.14,<0.15"]
+requires = ["maturin>=1.4,<2.0"]
 build-backend = "maturin"
 
 [project]
 name = "atomicx"
 description = "easy-to-use lock-free atomic integers, booleans, and floats for Python"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
+dynamic = ["version"]
 readme = "README.md"
 classifiers = [
     "Programming Language :: Rust",

@@ -2,7 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/atomicx.svg)](https://badge.fury.io/py/atomicx)
 
-atomicx is an easy-to-use atomics library for Python, providing atomic integer, boolean, and floats. It allows you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming. Everything is entirely lock-free and is backed by Rust's atomic types (or from `portable-atomic`).
+atomicx is an easy-to-use atomics library for Python, providing atomic integer, boolean, and floats. It allows you to perform atomic operations on shared variables, ensuring thread-safety and preventing race conditions in concurrent programming. Everything is entirely lock-free and is backed by Rust's atomic types (or from `portable-atomic`). Builds are published for the standard GIL runtime and the free-threaded CPython variants.
 
 ## Features
 
@@ -13,7 +13,7 @@ atomicx is an easy-to-use atomics library for Python, providing atomic integer, 
 
 ## Installation
 
-Binary wheels are provided for Python 3.7 and above on Linux, macOS, and Windows:
+Binary wheels are provided for Python 3.8 and above on Linux, macOS, and Windows:
 
 ```bash
 pip install atomicx
